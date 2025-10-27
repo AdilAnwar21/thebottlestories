@@ -17,8 +17,12 @@ export default function Testimonials() {
     offset: ["start end", "end start"]
   })
 
+  // Define all hooks unconditionally at the top level
   const y = useTransform(scrollYProgress, [0, 1], [150, -150])
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
+  const yReverse = useTransform(scrollYProgress, [0, 1], [-150, 150])
+  const yUp = useTransform(scrollYProgress, [0, 1], [0, -100])
+  const yDown = useTransform(scrollYProgress, [0, 1], [0, 100])
 
   const testimonials = [
     {
@@ -118,7 +122,7 @@ export default function Testimonials() {
   }
 
   return (
-    <section ref={ref} className="py-32 px-4 bg-gradient-to-b from-white via-[#F8F8F8] to-white relative overflow-hidden">
+    <section ref={ref} className="py-32 px-4 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
       {/* Parallax Background Elements - Disabled on mobile */}
       {!isMobile && (
         <>
@@ -127,20 +131,20 @@ export default function Testimonials() {
             className="absolute top-20 left-0 w-[500px] h-[500px] bg-gradient-to-br from-pink-100/30 to-transparent rounded-full blur-3xl pointer-events-none"
           />
           <motion.div
-            style={{ y: useTransform(scrollYProgress, [0, 1], [-150, 150]) }}
+            style={{ y: yReverse }}
             className="absolute bottom-20 right-0 w-[600px] h-[600px] bg-gradient-to-tl from-rose-100/30 to-transparent rounded-full blur-3xl pointer-events-none"
           />
 
           {/* Floating Quote Icons */}
           <motion.div
-            style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
-            className="absolute top-32 right-20 text-[#DADADA] opacity-20"
+            style={{ y: yUp }}
+            className="absolute top-32 right-20 text-gray-300 opacity-20"
           >
             <Quote className="w-24 h-24" />
           </motion.div>
           <motion.div
-            style={{ y: useTransform(scrollYProgress, [0, 1], [0, 100]) }}
-            className="absolute bottom-32 left-20 text-[#DADADA] opacity-20"
+            style={{ y: yDown }}
+            className="absolute bottom-32 left-20 text-gray-300 opacity-20"
           >
             <Quote className="w-24 h-24" />
           </motion.div>
@@ -191,9 +195,9 @@ export default function Testimonials() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#444444] mb-6 px-6 py-3 bg-white rounded-full border border-[#DADADA] shadow-lg"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 mb-6 px-6 py-3 bg-white rounded-full border border-gray-300 shadow-lg"
           >
-            <Star className="w-4 h-4 fill-[#444444]" />
+            <Star className="w-4 h-4 fill-gray-700" />
             TESTIMONIALS
           </motion.div>
           
@@ -201,7 +205,7 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-5xl md:text-7xl font-bold text-[#222222] mb-8 leading-tight"
+            className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight"
           >
             What Our Customers
             <span className="block">Say</span>
@@ -211,7 +215,7 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-lg md:text-xl text-[#444444] max-w-3xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
           >
             Don't just take our word for it—hear from those who've experienced the magic of our perfume gift hampers.
           </motion.p>
@@ -222,18 +226,18 @@ export default function Testimonials() {
           {/* Navigation Buttons */}
           <button
             onClick={goToPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white p-4 rounded-full shadow-xl border border-[#DADADA] transition-all duration-300 hover:scale-110"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white p-4 rounded-full shadow-xl border border-gray-300 transition-all duration-300 hover:scale-110"
             aria-label="Previous"
           >
-            <ChevronLeft className="w-6 h-6 text-[#222222]" />
+            <ChevronLeft className="w-6 h-6 text-gray-900" />
           </button>
           
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white p-4 rounded-full shadow-xl border border-[#DADADA] transition-all duration-300 hover:scale-110"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 bg-white/90 backdrop-blur-sm hover:bg-white p-4 rounded-full shadow-xl border border-gray-300 transition-all duration-300 hover:scale-110"
             aria-label="Next"
           >
-            <ChevronRight className="w-6 h-6 text-[#222222]" />
+            <ChevronRight className="w-6 h-6 text-gray-900" />
           </button>
 
           {/* Testimonials Carousel */}
@@ -264,7 +268,7 @@ export default function Testimonials() {
                     whileHover={!isMobile ? { y: -15, transition: { duration: 0.3 } } : {}}
                     className="group relative h-full"
                   >
-                    <div className="h-full bg-white rounded-3xl overflow-hidden border border-[#DADADA] shadow-xl hover:shadow-2xl transition-all duration-500">
+                    <div className="h-full bg-white rounded-3xl overflow-hidden border border-gray-300 shadow-xl hover:shadow-2xl transition-all duration-500">
                       {/* Image Section with Overlay */}
                       <div className="relative h-80 overflow-hidden">
                         <img 
@@ -390,8 +394,8 @@ export default function Testimonials() {
                 onClick={() => setCurrentIndex(testimonials.length + index)}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   Math.floor((currentIndex % testimonials.length)) === index
-                    ? 'w-8 bg-[#222222]'
-                    : 'w-2 bg-[#DADADA] hover:bg-[#444444]'
+                    ? 'w-8 bg-gray-900'
+                    : 'w-2 bg-gray-300 hover:bg-gray-600'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
